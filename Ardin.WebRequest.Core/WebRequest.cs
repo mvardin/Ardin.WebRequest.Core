@@ -21,13 +21,16 @@ namespace Ardin
                 using (Stream responseStream = httpWebResponse.GetResponseStream())
                 {
                     Stream streamToRead = responseStream;
-                    if (httpWebResponse.ContentEncoding.ToLower().Contains("gzip"))
+                    if (httpWebResponse.ContentEncoding != null)
                     {
-                        streamToRead = new GZipStream(streamToRead, CompressionMode.Decompress);
-                    }
-                    else if (httpWebResponse.ContentEncoding.ToLower().Contains("deflate"))
-                    {
-                        streamToRead = new DeflateStream(streamToRead, CompressionMode.Decompress);
+                        if (httpWebResponse.ContentEncoding.ToLower().Contains("gzip"))
+                        {
+                            streamToRead = new GZipStream(streamToRead, CompressionMode.Decompress);
+                        }
+                        else if (httpWebResponse.ContentEncoding.ToLower().Contains("deflate"))
+                        {
+                            streamToRead = new DeflateStream(streamToRead, CompressionMode.Decompress);
+                        }
                     }
 
                     using (StreamReader streamReader = new StreamReader(streamToRead, Encoding.UTF8))
@@ -48,7 +51,7 @@ namespace Ardin
             try
             {
                 ServicePointManager.ServerCertificateValidationCallback = delegate { return true; };
-                ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls | SecurityProtocolType.Ssl3;
+                //ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12 | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls | SecurityProtocolType.Ssl3;
 
                 HttpWebRequest httpWebRequest = (HttpWebRequest)System.Net.WebRequest.Create(request.Url);
 
