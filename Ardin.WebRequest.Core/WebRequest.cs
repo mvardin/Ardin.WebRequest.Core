@@ -55,31 +55,32 @@ namespace Ardin
 
                 HttpWebRequest httpWebRequest = (HttpWebRequest)System.Net.WebRequest.Create(request.Url);
 
-                foreach (string headerKey in request.Header.AllKeys)
-                {
-                    KeyValuePair<string, string> header = new KeyValuePair<string, string>(headerKey, request.Header[headerKey]);
-                    switch (header.Key)
+                if (request.Header != null)
+                    foreach (string headerKey in request.Header.AllKeys)
                     {
-                        case "User-Agent":
-                            httpWebRequest.UserAgent = header.Value;
-                            break;
-                        case "Accept":
-                            httpWebRequest.Accept = header.Value;
-                            break;
-                        case "Referer":
-                            httpWebRequest.Referer = header.Value;
-                            break;
-                        case "Content-Type":
-                            httpWebRequest.ContentType = header.Value;
-                            break;
-                        case "KeepAlive":
-                            httpWebRequest.KeepAlive = header.Value == "true";
-                            break;
-                        default:
-                            httpWebRequest.Headers.Set(header.Key, header.Value);
-                            break;
+                        KeyValuePair<string, string> header = new KeyValuePair<string, string>(headerKey, request.Header[headerKey]);
+                        switch (header.Key)
+                        {
+                            case "User-Agent":
+                                httpWebRequest.UserAgent = header.Value;
+                                break;
+                            case "Accept":
+                                httpWebRequest.Accept = header.Value;
+                                break;
+                            case "Referer":
+                                httpWebRequest.Referer = header.Value;
+                                break;
+                            case "Content-Type":
+                                httpWebRequest.ContentType = header.Value;
+                                break;
+                            case "KeepAlive":
+                                httpWebRequest.KeepAlive = header.Value == "true";
+                                break;
+                            default:
+                                httpWebRequest.Headers.Set(header.Key, header.Value);
+                                break;
+                        }
                     }
-                }
 
                 httpWebRequest.Credentials = CredentialCache.DefaultCredentials;
 
