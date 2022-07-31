@@ -82,6 +82,10 @@ namespace Ardin
                         }
                     }
 
+                httpWebRequest.Timeout = (int)request.Timeout.TotalMilliseconds;
+                httpWebRequest.ReadWriteTimeout = (int)request.Timeout.TotalMilliseconds;
+                httpWebRequest.ContinueTimeout = (int)request.Timeout.TotalMilliseconds;
+
                 httpWebRequest.Credentials = CredentialCache.DefaultCredentials;
 
                 if (request.Cookie != null && request.Cookie.Count > 0)

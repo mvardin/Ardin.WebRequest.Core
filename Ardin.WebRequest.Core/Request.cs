@@ -15,5 +15,6 @@ namespace Ardin
         public WebProxy Proxy { get; set; }
         public CookieCollection Cookie { get; set; }
         public WebHeaderCollection Header { get; set; }
+        public TimeSpan Timeout { get; set; } = TimeSpan.FromMinutes(1);
     }
 }
