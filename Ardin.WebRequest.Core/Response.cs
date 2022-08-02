@@ -13,5 +13,6 @@ namespace Ardin
         public string Body { get; set; }
         public CookieCollection Cookie { get; set; }
         public HttpStatusCode Code { get; set; }
+        public string ExtraMessage { get; set; }
     }
 }

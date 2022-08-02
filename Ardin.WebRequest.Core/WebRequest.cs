@@ -123,11 +123,23 @@ namespace Ardin
             }
             catch (WebException e)
             {
+                while (e.InnerException != null)
+                {
+                    e = (WebException)e.InnerException;
+                }
+                response.ExtraMessage = e.Message + " | " + e.StackTrace;
+
                 if (e.Status == WebExceptionStatus.ProtocolError) httpWebResponse = (HttpWebResponse)e.Response;
                 else return false;
             }
             catch (Exception ex)
             {
+                while (ex.InnerException != null)
+                {
+                    ex = (WebException)ex.InnerException;
+                }
+                response.ExtraMessage = ex.Message + " | " + ex.StackTrace;
+
                 if (httpWebResponse != null) httpWebResponse.Close();
                 return false;
             }
